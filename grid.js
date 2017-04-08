@@ -2,10 +2,13 @@
 
 var Grid = function( length, height, obstacles ){
 	this.nodes = this.genNodes( length, height );
+	this.genObstacles(obstacles)
 }
 
 // public functions
-
+Grid.prototype.getNode = function( x, y ){
+	return this.nodes[x*10 + y]
+}
 
 //private functions
 Grid.prototype.genNodes = function( len, high ){
@@ -16,7 +19,6 @@ Grid.prototype.genNodes = function( len, high ){
 		}
 	}
 	return nodes
-
 }
 
 Grid.prototype.makeNode = function( x, y ){
@@ -25,6 +27,12 @@ Grid.prototype.makeNode = function( x, y ){
 		x: x, 
 		y: y, 
 		walk: true
+	}
+}
+
+Grid.prototype.genObstacles = function(obstacles){
+	for (noWalk of obstacles){
+		this.getNode( noWalk.x, noWalk.y ).walk = false
 	}
 }
 
