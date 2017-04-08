@@ -1,5 +1,6 @@
-var PathFinder = function(initialPos, goal){
-	this.path = this.getPath;
+var PathFinder = function(start, goal){
+	this.start = start;
+	this.goal = goal;
 }
 
 module.exports = PathFinder

@@ -1,6 +1,8 @@
 //nodes should be an objects in itself as prototype methiods are likely to be needed.
+const Node = require("./node")
 
 var Grid = function( length, height, obstacles ){
+	this.limits = { x: length, y: height}
 	this.nodes = this.genNodes( length, height );
 	this.genObstacles(obstacles)
 }
@@ -23,11 +25,8 @@ Grid.prototype.genNodes = function( len, high ){
 
 Grid.prototype.makeNode = function( x, y ){
 	// console.log(`new node x:${x} y:${y}`)
-	return {
-		x: x, 
-		y: y, 
-		walk: true
-	}
+
+	return ( new Node( x, y, true) )
 }
 
 Grid.prototype.genObstacles = function(obstacles){

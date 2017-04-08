@@ -37,6 +37,8 @@ describe("The Grid", function(){
 		assert.equal( noWalk[0].walk, false );
 		assert.equal( noWalk[1].walk, false );
 	})
+
+	it("should be able to return a node's neighbours")
 })
 
 //PathFinder tests
@@ -52,13 +54,21 @@ describe("The PathFinder", function(){
 
 	beforeEach(()=>{
 		grid = new Grid( 12, 12, obstacles );
-		straightPath = new PathFinder( {x: 3, y: 3}, {x: 6, y: 6} )
+		straightPath = new PathFinder( {x: 3, y: 3}, {x: 3, y: 6} )
 		diagonalPath = new PathFinder( {x: 0, y: 0}, {x: 4, y: 4} )
 		blockedPath = new PathFinder( {x: 2, y: 7}, {x: 7, y: 6} )
 	})
 
-	it("should have starting coordinates")
-	it("should have finishing coordinates")
-	it("should hold ")
+	it("should have starting coordinates", ()=>{
+		assert.equal(straightPath.start.x, 3)
+		assert.equal(straightPath.start.y, 3)
+	})
+
+	it("should have finishing coordinates", ()=>{
+		assert.equal(diagonalPath.goal.x, 4)
+		assert.equal(diagonalPath.goal.y, 4)
+	})
+
+	it("should hold a straight path as array of nodes")
 
 })
