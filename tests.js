@@ -1,28 +1,31 @@
-var PathFinder = require("./algorithm");
+var Path = require("./path")
 var Grid = require("./grid");
-var assert = require("assert");
+var assert = require("chai").assert;
 
 // grid mapping tests
 describe("The Grid", function(){
 
-	var grid;
+	let grid;
+	let staightPath; let diagonalPath; let blockedPath;
 	const obstacles = [
 		{x: 5, y: 5}, 
 		{x: 5, y: 6}, 
 		{x: 5, y: 7}];
 
 	beforeEach(()=>{
-		grid = new Grid( 10, 10, obstacles	);
+		grid = new Grid( 12, 12, obstacles	);
 	})
 
-	it("should hold a list of 100 nodes", ()=>{
-		assert.equal( grid.nodes.length, 100 )
+	it("should hold a list of 144 nodes", ()=>{
+		assert.equal( grid.nodes.length, 12 )
+		assert.equal( grid.nodes[0].length, 12 )
+
 	})
 
 	it("should generate nodes with x, y and walkable properties", ()=>{
-		assert.equal( grid.nodes[0].x, 0 )
-		assert.equal( grid.nodes[4].y, 4 )
-		assert.equal( grid.nodes[3].walk, true )
+		assert.equal( grid.nodes[4][0].x, 4 )
+		assert.equal( grid.nodes[4][0].y, 0 )
+		assert.equal( grid.nodes[3][2].walk, true )
 	})
 
 	it("should be able to return a node through coordinates", ()=>{
@@ -38,37 +41,25 @@ describe("The Grid", function(){
 		assert.equal( noWalk[1].walk, false );
 	})
 
-	it("should be able to return a node's neighbours")
-})
-
-//PathFinder tests
-
-describe("The PathFinder", function(){
-
-	let grid;
-	let staightPath; let diagonalPath; let blockedPath;
-	const obstacles = [
-		{x: 5, y: 5}, 
-		{x: 5, y: 6}, 
-		{x: 5, y: 7}];
-
-	beforeEach(()=>{
-		grid = new Grid( 12, 12, obstacles );
-		straightPath = new PathFinder( {x: 3, y: 3}, {x: 3, y: 6} )
-		diagonalPath = new PathFinder( {x: 0, y: 0}, {x: 4, y: 4} )
-		blockedPath = new PathFinder( {x: 2, y: 7}, {x: 7, y: 6} )
+	it("should be able to return a node's neighbours", ()=>{
+		const node = grid.getNode( 6, 7 );
+		const neighbours = grid.getNeighbours( node )
+		for ( neighbour of neighbours ){
+			//format of closeTo is (actual, expected, delta)
+			assert.closeTo( neighbour.x, 6, 1 )
+			assert.closeTo( neighbour.y, 7, 1 )
+		}
 	})
 
-	it("should have starting coordinates", ()=>{
-		assert.equal(straightPath.start.x, 3)
-		assert.equal(straightPath.start.y, 3)
-	})
+	// it("should only return valid neighbours", ()=>{
+	// 	// const edgeNeighbours = grid.getNeighbours( grid.getNode( 0, 7 ) )
+	// 	const cornerNeighbours = grid.getNeighbours( grid.getNode( 0, 0 ) )
+	
+	// 	// assert.equal(edgeNeighbours.length, 5)
+	// 	assert.equal(cornerNeighbours.length, 3)
+	// })
 
-	it("should have finishing coordinates", ()=>{
-		assert.equal(diagonalPath.goal.x, 4)
-		assert.equal(diagonalPath.goal.y, 4)
-	})
-
-	it("should hold a straight path as array of nodes")
-
+	// straightPath = grid.generatePath( {x: 3, y: 3}, {x: 3, y: 6} )
+	// diagonalPath = grid.generatePath( {x: 0, y: 0}, {x: 4, y: 4} )
+	// blockedPath = grid.generatePath( {x: 2, y: 7}, {x: 7, y: 6} )
 })
