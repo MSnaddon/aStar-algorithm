@@ -19,5 +19,6 @@ describe("The Grid", function(){
 		assert.equal(grid.nodes.length, 100)
 	})
 
-	it
+	it("should generate nodes with x, y and walkable properties")
+	it("should be able to return a node through coordinates")
 })

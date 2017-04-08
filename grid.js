@@ -4,6 +4,10 @@ var Grid = function( length, height, obstacles ){
 	this.nodes = this.genNodes( length, height );
 }
 
+// public functions
+
+
+//private functions
 Grid.prototype.genNodes = function( len, high ){
 	const nodes = []
 	for ( let x=0 ; x<len ; x++ ){
@@ -16,6 +20,7 @@ Grid.prototype.genNodes = function( len, high ){
 }
 
 Grid.prototype.makeNode = function( x, y ){
+	// console.log(`new node x:${x} y:${y}`)
 	return {
 		x: x, 
 		y: y, 
