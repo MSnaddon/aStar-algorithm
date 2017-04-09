@@ -51,13 +51,12 @@ describe("The Grid", function(){
 		}
 	})
 
-	// it("should only return valid neighbours", ()=>{
-	// 	// const edgeNeighbours = grid.getNeighbours( grid.getNode( 0, 7 ) )
-	// 	const cornerNeighbours = grid.getNeighbours( grid.getNode( 0, 0 ) )
-	
-	// 	// assert.equal(edgeNeighbours.length, 5)
-	// 	assert.equal(cornerNeighbours.length, 3)
-	// })
+	it("should only return valid neighbours", ()=>{
+		const edgeNeighbours = grid.getNeighbours( grid.getNode( 0, 7 ) )
+		const cornerNeighbours = grid.getNeighbours( grid.getNode( 0, 0 ) )
+		assert.equal(edgeNeighbours.length, 5)
+		assert.equal(cornerNeighbours.length, 3)
+	})
 
 	// straightPath = grid.generatePath( {x: 3, y: 3}, {x: 3, y: 6} )
 	// diagonalPath = grid.generatePath( {x: 0, y: 0}, {x: 4, y: 4} )
