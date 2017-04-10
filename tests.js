@@ -1,12 +1,12 @@
-var Path = require("./path")
-var Grid = require("./grid");
-var assert = require("chai").assert;
+const Path = require("./path");
+const Score = require("./score");
+const Grid = require("./grid");
+const assert = require("chai").assert;
 
 // grid mapping tests
 describe("The Grid", function(){
 
 	let grid;
-	let staightPath; let diagonalPath; let blockedPath;
 	const obstacles = [
 		{x: 5, y: 5}, 
 		{x: 5, y: 6}, 
@@ -58,7 +58,53 @@ describe("The Grid", function(){
 		assert.equal(cornerNeighbours.length, 3)
 	})
 
-	// straightPath = grid.generatePath( {x: 3, y: 3}, {x: 3, y: 6} )
-	// diagonalPath = grid.generatePath( {x: 0, y: 0}, {x: 4, y: 4} )
-	// blockedPath = grid.generatePath( {x: 2, y: 7}, {x: 7, y: 6} )
+	
+
+})
+
+describe("A score", function(){
+	let score = new Score(4,5);
+
+	it("should hold an h and g", ()=>{
+		assert.equal(score.h, 4)
+		assert.equal(score.g, 5)
+	})
+
+	it("should add h and g to get f", ()=>{
+		assert.equal(score.f, 9)
+	})
+
+})
+
+describe("A Path", function(){
+
+	let grid;
+	let staightPath; let diagonalPath; let blockedPath;
+	const obstacles = [
+		{x: 5, y: 5}, 
+		{x: 5, y: 6}, 
+		{x: 5, y: 7}];
+
+	beforeEach(()=>{
+		grid = new Grid( 12, 12, obstacles	);
+		straightPath = new Path( {x: 3, y: 3}, {x: 3, y: 6}, grid )
+		diagonalPath = new Path( {x: 0, y: 0}, {x: 4, y: 4}, grid )
+		blockedPath = new Path( {x: 2, y: 7}, {x: 7, y: 6}, grid )
+	})
+
+	it("should generate a straight path from two points",()=>{
+		assert.equal( straightPath.route[1].x, 3 );
+		assert.equal( straightPath.route[1].y, 4 );
+		assert.equal( straightPath.route[3].x, 3 );
+		assert.equal( straightPath.route[3].y, 6 );
+	})
+
+	it("should generate a path diagonally", ()=>{
+		assert.equal(diagonalPath.route.length, 5)
+	})
+
+	it("should generate a path round an obstacle", ()=>{
+		console.log(blockedPath.route)
+		assert.equal(blockedPath.route.length, 6)
+	})
 })

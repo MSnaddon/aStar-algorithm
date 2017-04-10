@@ -1,6 +1,5 @@
 //nodes should be an objects in itself as prototype methiods are likely to be needed.
 const Node = require("./node")
-const Path = require("./path")
 
 var Grid = function( length, height, obstacles ){
 	this.limits = { x: length, y: height}
@@ -37,12 +36,7 @@ Grid.prototype.getNeighbours = function(node){
 	
 }
 
-//this shoudl technically be on a player object as it's his perception of the grid that should determine the pathing, not the grid itself. in this example things are simplified.
-Grid.prototype.genPath = function(start, end){
-	
 
-
-}
 
 //private functions
 Grid.prototype.genNodes = function( len, high ){
