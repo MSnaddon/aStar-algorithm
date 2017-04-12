@@ -14,7 +14,7 @@ Path.prototype.genPath = function(grid){
 	let startNode = grid.getNode(this.start.x, this.start.y)
 	let goalNode = grid.getNode(this.goal.x, this.goal.y)
 
-	let limiter = 20 //purely debugging to get avoid infinite loops
+	let limiter = 300 //purely debugging to get avoid infinite loops
 
 	//start node has no origin, it's score needs to reflect it is the start (h=0)
 	startNode.score = new Score(0, this.getDistance(startNode, goalNode), "origin")
