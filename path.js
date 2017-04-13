@@ -1,28 +1,29 @@
 const Score = require("./score")
 
-const Path = function(start, goal, grid){
+const Path = function(start, goal, grid, limit){
 	//start and goal are just coordinates, nodes recieved from grid during genPath. perhaps in later situations float coordinates would be handled in some fashion.
 	this.start = start;
 	this.goal = goal;
+	this.nodeLimit = limit;
 	this.route = this.genPath(grid);
+
 }
 
 
 
 //Path is simply an array of nodes from start to end.
 Path.prototype.genPath = function(grid){
-	let startNode = grid.getNode(this.start.x, this.start.y)
-	let goalNode = grid.getNode(this.goal.x, this.goal.y)
-
-	let limiter = 300 //purely debugging to get avoid infinite loops
+	let startNode = grid.getNode( this.start.x, this.start.y );
+	let goalNode = grid.getNode( this.goal.x, this.goal.y );
+	let limiter = this.nodeLimit;
 
 	//start node has no origin, it's score needs to reflect it is the start (h=0)
-	startNode.score = new Score(0, this.getDistance(startNode, goalNode), "origin")
+	startNode.score = new Score( 0, this.getDistance( startNode, goalNode ), "origin" )
 
 	let opened = [startNode]
 	let closed = []
 
-	while(limiter>0){
+	while( limiter>0 ){
 		//find the node lowest f (then g).
 		const scanNode = this.sortByScores(opened)[0];
 		//if end node is goal, return the trace
@@ -48,6 +49,8 @@ Path.prototype.genPath = function(grid){
 		closed.push(opened.splice( 0, 1 )[0]); // scanNode is now closed
 		limiter --
 	}
+
+	return "Node limit reached"
 }
 
 Path.prototype.sortByScores = function(openedNodes){

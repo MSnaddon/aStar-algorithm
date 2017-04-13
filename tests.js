@@ -97,10 +97,10 @@ describe("A Path", function(){
 		grid2 = new Grid( 12, 12, obstacles	);
 		grid3 = new Grid( 12, 12, obstacles	);
 		grid4 = new Grid( 12, 12, obstacles );
-		straightPath = new Path( {x: 3, y: 3}, {x: 3, y: 6}, grid1 )
-		diagonalPath = new Path( {x: 0, y: 0}, {x: 4, y: 4}, grid2 )
-		blockedPath = new Path( {x: 2, y: 7}, {x: 7, y: 6}, grid3 )
-		impossiblePath = new Path({x: 8, y: 6}, {x: 11, y: 11 }, grid4)
+		straightPath = new Path( {x: 3, y: 3}, {x: 3, y: 6}, grid1, 80 )
+		diagonalPath = new Path( {x: 0, y: 0}, {x: 4, y: 4}, grid2, 80 )
+		blockedPath = new Path( {x: 2, y: 7}, {x: 7, y: 6}, grid3, 80 )
+		impossiblePath = new Path({x: 8, y: 6}, {x: 11, y: 11 }, grid4, 80 )
 	})
 
 	it("should generate a straight path from two points",()=>{
@@ -120,6 +120,6 @@ describe("A Path", function(){
 	})
 
 	it("should return error if unable to find route", ()=>{
-		assert.equal(impossiblePath.route, "Node limit Reached" )
+		assert.equal(impossiblePath.route, "Node limit reached" )
 	})
 })
