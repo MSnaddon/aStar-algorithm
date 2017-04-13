@@ -1,6 +1,7 @@
 const Path = require("./path");
 const Score = require("./score");
 const Grid = require("./grid");
+
 const assert = require("chai").assert;
 
 // grid mapping tests
@@ -81,15 +82,25 @@ describe("A Path", function(){
 	let grid;
 	let staightPath; let diagonalPath; let blockedPath;
 	const obstacles = [
+		{x: 5, y: 4},
 		{x: 5, y: 5}, 
 		{x: 5, y: 6}, 
-		{x: 5, y: 7}];
+		{x: 5, y: 7},
+		{x: 5, y: 8},
+		{x: 10, y: 10},
+		{x: 11, y: 10},
+		{x: 10, y: 11}
+		];
 
 	beforeEach(()=>{
-		grid = new Grid( 12, 12, obstacles	);
-		straightPath = new Path( {x: 3, y: 3}, {x: 3, y: 6}, grid )
-		diagonalPath = new Path( {x: 0, y: 0}, {x: 4, y: 4}, grid )
-		blockedPath = new Path( {x: 2, y: 7}, {x: 7, y: 6}, grid )
+		grid1 = new Grid( 12, 12, obstacles	);
+		grid2 = new Grid( 12, 12, obstacles	);
+		grid3 = new Grid( 12, 12, obstacles	);
+		grid4 = new Grid( 12, 12, obstacles );
+		straightPath = new Path( {x: 3, y: 3}, {x: 3, y: 6}, grid1 )
+		diagonalPath = new Path( {x: 0, y: 0}, {x: 4, y: 4}, grid2 )
+		blockedPath = new Path( {x: 2, y: 7}, {x: 7, y: 6}, grid3 )
+		impossiblePath = new Path({x: 8, y: 6}, {x: 11, y: 11 }, grid4)
 	})
 
 	it("should generate a straight path from two points",()=>{
@@ -104,7 +115,11 @@ describe("A Path", function(){
 	})
 
 	it("should generate a path round an obstacle", ()=>{
-		console.log(blockedPath.route)
-		assert.equal(blockedPath.route.length, 6)
+		// console.log(blockedPath.route)
+		assert.equal(blockedPath.route.length, 7)
+	})
+
+	it("should return error if unable to find route", ()=>{
+		assert.equal(impossiblePath.route, "Node limit Reached" )
 	})
 })

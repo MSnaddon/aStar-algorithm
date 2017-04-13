@@ -30,14 +30,17 @@ Path.prototype.genPath = function(grid){
 		if ( goalNode === scanNode ){ return this.getTrace(scanNode) }
 		//get neighbours of scan node
 		const neighbours = grid.getNeighbours(scanNode)
-		.filter((node)=>{
+		.filter( ( node )=>{
 			if ( !node.walk ){ return false }
 			if ( closed.indexOf(node) === -1 ) { return true }
 			return false
 		})
 		.forEach(( node )=>{
-			node.score = this.calculateScores(node, scanNode, goalNode)
-			if(opened.indexOf(node) === -1) {
+			const newNodeScore = this.calculateScores(node, scanNode, goalNode)
+			if( !node.score || newNodeScore.h <= node.score.h ) {
+				node.score = newNodeScore;
+			}
+			if( opened.indexOf(node) === -1 ) {
 				opened.push(node)
 			}
 		});
